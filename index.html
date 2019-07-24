@@ -119,7 +119,7 @@ function fetchSourhallData(){
         var sourhallDiv = document.getElementById("sourhall_data");
 
         var sourhallElement = document.createElement('span');
-        sourhallElement.innerHTML = ("Sourhall, Todmorden<br>Temperature: " + temp.toFixed(1) + "°C<br>Humidity: " + Math.round(humidity) + "%<br>CO₂: " + co2 + "ppm<br>Volatile Organic Compounds: " + oc + "ppb<br>PM2.5 (Particulate Matter): " + pm25 + "μg/m³<br><br>");        
+        sourhallElement.innerHTML = ("<b>Sourhall</b>, Todmorden<br>Temperature: " + temp.toFixed(1) + "°C<br>Humidity: " + Math.round(humidity) + "%<br>CO₂: " + co2 + "ppm<br>Volatile Organic Compounds: " + oc + "ppb<br>PM2.5 (Particulate Matter): " + pm25 + "μg/m³<br><br>");        
         sourhallDiv.appendChild(sourhallElement);
      }
   })
