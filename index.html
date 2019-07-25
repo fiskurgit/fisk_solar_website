@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>FISK</title>
+    <title>FISK SOLAR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -30,6 +30,7 @@
     img{
         max-width: 100%;
         min-width: 100%;
+	will-change: opacity;
         mix-blend-mode: hard-light;
     }
     footer{
@@ -119,7 +120,7 @@ function fetchSourhallData(){
         var sourhallDiv = document.getElementById("sourhall_data");
 
         var sourhallElement = document.createElement('span');
-        sourhallElement.innerHTML = ("Sourhall, Todmorden<br>Temperature: " + temp.toFixed(1) + "°C<br>Humidity: " + Math.round(humidity) + "%<br>CO₂: " + co2 + "ppm<br>Volatile Organic Compounds: " + oc + "ppb<br>PM2.5 (Particulate Matter): " + pm25 + "μg/m³<br><br>");        
+        sourhallElement.innerHTML = ("<b>Sourhall</b>, Todmorden<br>Temperature: " + temp.toFixed(1) + "°C<br>Humidity: " + Math.round(humidity) + "%<br>CO₂: " + co2 + "ppm<br>Volatile Organic Compounds: " + oc + "ppb<br>PM2.5 (Particulate Matter): " + pm25 + "μg/m³<br><br>");        
         sourhallDiv.appendChild(sourhallElement);
      }
   })
