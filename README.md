@@ -10,9 +10,10 @@ I'll be using two 100 watt panels and initially a full leisure battery setup. On
 
 ## Design Decisions
 
-* No analytics, just like in my mobile apps I don't use analytics of any kind.
-* Minimise page size including images. Aim for sub 200k with a hard ceiling of 500k.
-* Javascript is only used to load a json file from the RaspberryPi which includes various data points. The site should run correcty with JS disabled.
+* Markdown only. All my existing content is in markdown.
+* No analytics, just like in my mobile apps I don't use analytics or tracking of any kind.
+* Minimise page size including images. Aim for sub 200kb with a hard ceiling of 500kb.
+* Javascript is only used to load a json file from the RaspberryPi which includes various data points about my location and the system. The site should run correcty with JS disabled.
 
 ### Links
 
