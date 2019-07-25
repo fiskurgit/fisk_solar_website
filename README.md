@@ -8,6 +8,12 @@ _solar.lowtech_ has this power source:
 
 I'll be using two 100 watt panels and initially a full leisure battery setup. Once up and running I'll look at using a [Lipo Rider Pro from Seeed Studio](http://wiki.seeedstudio.com/Lipo_Rider_Pro/) connected to the charge controller, with a LiPo rechargable battery powering the RaspberryPi.
 
+## Design Decisions
+
+* No analytics, just like in my mobile apps I don't use analytics of any kind.
+* Minimise page size including images. Aim for sub 200k with a hard ceiling of 500k.
+* Javascript is only used to load a json file from the RaspberryPi which includes various data points. The site should run correcty with JS disabled.
+
 ### Links
 
 * https://github.com/lowtechmag/solar/wiki/Solar-Web-Design
