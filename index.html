@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>FISK SOLAR</title>
+    <title>Mini Website</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -81,13 +81,13 @@
     <h1>FISK <strike>SOLAR</strike></h1>
 </header>
 <div class="content">
-    <p class="img"><img src="example_dithered.png" alt="Example" /></p>
+    <h1>Mini Website</h1><p class="img"><img src="example_dithered.png" alt="GaddingsDamn" /></p><p><a href="./2019/07/25/index.html">25/07/2019 HelloWorld!</href><br></p>
 </div>
 
 <footer>
 <hr>
 <div id="sourhall_data"></div>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 21kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 5.7 kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 <script>
 function fetchAwairData(callback) {
@@ -111,7 +111,7 @@ function fetchSourhallData(){
         let co2 = awairSourhall[0].sensors[2].value;
         console.log("Sourhall co2: " + co2);
 
-	let oc = awairSourhall[0].sensors[3].value;
+	    let oc = awairSourhall[0].sensors[3].value;
         console.log("Sourhall organic compounds: " + oc);
 
         let pm25 = awairSourhall[0].sensors[4].value;
@@ -125,10 +125,6 @@ function fetchSourhallData(){
      }
   })
 }
-
-
-
-
 </script>
 </body>
 </html>
