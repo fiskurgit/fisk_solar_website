@@ -23,15 +23,9 @@
     hr{
         border: 1px solid black;
     }
-    p.img{
-        mix-blend-mode: multiply;
-        background-color: #ff8888;
-    }
     img{
         max-width: 100%;
         min-width: 100%;
-	will-change: opacity;
-        mix-blend-mode: hard-light;
     }
     footer{
         font-size: 0.95rem;
@@ -81,7 +75,7 @@
     <h1>FISK <strike>SOLAR</strike></h1>
 </header>
 <div class="content">
-    <h1>Hexagrams</h1><p class="img"><img src="screenshot2_dithered.png" alt="Hexagrams Image" /></p><p>I wrote this a while back after a Todmorden local posted some <a href="https://en.wikipedia.org/wiki/Hexagram">hexagram</a> sketches he'd done on Instagram.</p><p class="img"><img src="screenshot1_dithered.png" alt="Hexagrams Image" /></p><p>To run yourself: download <a href="https://processing.org">Processing</a> and copy the source below. Click the mouse to generate a new matrix, each time a .pdf is saved in the sketch folder (find it from within Processing by selecting the Sketch menu then <em>Show Sketch folder</em> - if you want an .svg use an <a href="https://cloudconvert.com/pdf-to-svg">online pdf to svg converter</a>)</p><pre><code>
+    <h1>Hexagrams</h1><p><img src="screenshot2_processed.png" alt="Hexagrams Image" /></p><p>I wrote this a while back after a Todmorden local posted some <a href="https://en.wikipedia.org/wiki/Hexagram">hexagram</a> sketches he'd done on Instagram.</p><p><img src="screenshot1_processed.png" alt="Hexagrams Image" /></p><p>To run yourself: download <a href="https://processing.org">Processing</a> and copy the source below. Click the mouse to generate a new matrix, each time a .pdf is saved in the sketch folder (find it from within Processing by selecting the Sketch menu then <em>Show Sketch folder</em> - if you want an .svg use an <a href="https://cloudconvert.com/pdf-to-svg">online pdf to svg converter</a>)</p><pre><code>
 import processing.pdf.*;
 
 int VERTEXES = 6;
@@ -194,7 +188,7 @@ class Hexagram{
 <footer>
 <hr>
 <div id="sourhall_data"></div>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 91.7 kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 91.5 kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 <script>
 function fetchAwairData(callback) {

@@ -5,8 +5,8 @@ Geo URI: `geo:55.5896,-5.1647`
 Latitude: 55° 35' 22" N  
 Longitude: 5° 9' 53" W  
 
-Three standing stones separated by a road. The larger two were surrounded with barley crop so we couldnt get close. 
+Three standing stones separated by a road. The larger two were surrounded with barley crop so we couldnt get close.
 
-![Standing stones](arran_stones.jpeg)
+![Standing stones](arran_stones_filter_override_Burkes_255.jpeg)
 
-![Single stone](cladach_stone.jpeg)
+![Single stone](cladach_stone_filter_override_Burkes_255.jpeg)
