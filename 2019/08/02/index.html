@@ -83,13 +83,13 @@
     </svg>
 </header>
 <div class="content">
-    <h1>Off-cloud Webserver</h1><h4>02nd July 2019</h4><p>This website is running on a <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/">Raspberry Pi Zero W</a> in my garden shed, and is powered by a battery charged by two 100W solar panels on the shed roof.</p><p>The content is created in simple Markdown files which are turned into Html by a static site generator I made called <a href="https://github.com/fiskurgit/Statisk">Statisk</a>. New posts are written, Statisk does the conversion, then the local changes are pushed to a Git repo (<a href="https://github.com/fiskurgit/fisk_solar_website">a public repo on Github</a>). The Pi Zero has a regular <a href="https://en.wikipedia.org/wiki/Cron">Cron job</a> checking for any changes to download and update the site.</p>
+    <h1>Off-cloud Webserver</h1><h4>02nd July 2019</h4><p>This website is running on a <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/">Raspberry Pi Zero W</a> in my garden shed, and is powered by a battery charged by two 100W solar panels on the shed roof.</p><p>The content is created in simple <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> files which are turned into Html by a static site generator I made called <a href="https://github.com/fiskurgit/Statisk">Statisk</a>. New posts are written, Statisk does the conversion, then the local changes are pushed to a Git repo (<a href="https://github.com/fiskurgit/fisk_solar_website">a public repo on Github</a>). The Pi Zero has a regular <a href="https://en.wikipedia.org/wiki/Cron">Cron job</a> checking for any changes to download and update the site and also grabs local environment data from an <a href="https://getawair.com/">Awair air monitor</a>.</p>
 </div>
 
 <footer>
 <hr>
 <div id="sourhall_data"></div>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 6.3kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 6.5kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 <script>
 function fetchAwairData(callback) {
