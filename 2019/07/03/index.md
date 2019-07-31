@@ -1,3 +1,4 @@
+<!--- -image_format jpeg_high -convert_greyscale -->
 # Sleeping babies
 
 [View animated version (requires Javascript)](./js/)

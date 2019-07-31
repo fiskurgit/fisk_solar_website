@@ -1,5 +1,6 @@
-# Mini Website
+<!--- -algorithm 8by8bayer -threshold 245 -foreground #cc0000 -->
+# Fisk Solar
 
-![GaddingsDamn](example_filter_override_8by8Bayer_255.jpeg)
+![GaddingsDamn](example.jpeg)
 
 {{ posts }}
