@@ -1,3 +1,4 @@
+<!--- -image_format jpeg_high -->
 # Summit Tunnel Fire. December 20th 1984
 #### 05th May 2019  
 OS Grid Ref: [SD 94522 18542](https://www.ordnancesurvey.co.uk/osmaps/53.664104821167314,-2.084343430209656,17.0/pin/)  
