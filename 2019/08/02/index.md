@@ -24,10 +24,10 @@ I made some notes on setting up the web server so it'd be easier to do next time
 
 * Install git: `sudo apt-get install git` and move to Nginx web server directory: `cd /var/www/html`
 
-* Add hello world index.html
+* Add 'hello world' index.html
 
 * Configure router. I have Sky Broadband (for the moment, I'm in the process of switching away from Murdoch) with Google WiFi attached via Ethernet. Create Firewall rule on the Broadband Router to allow incoming requests on Port 80 to be forwarded to Google WiFi. Google WiFi then has a port forwarding rule to pass incoming port 80 requests to the Pi Zero.
 
-* Setup No-IP. From the Pi Zero SSH session get the external IP: `curl icanhazip.com`. Add this address to a No-IP hostname: [fisksolar.ddns.net](http://fisksolar.ddns.net).
+* Setup No-IP. From the Pi Zero SSH session get the external IP: `curl icanhazip.com`. Add this address to a [No-IP](https://www.noip.com) hostname: [fisksolar.ddns.net](http://fisksolar.ddns.net).
 
 * Add cron job to update website from git repo
