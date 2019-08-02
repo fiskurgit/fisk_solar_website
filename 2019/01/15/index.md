@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -background -#b7b7b7 -->
+<!--- -image_format jpeg_high -background #d7d7d7 -->
 # Series One
 
 ![Sample1](sample1.png)
