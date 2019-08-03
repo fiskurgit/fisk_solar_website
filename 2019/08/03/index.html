@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Fisk Solar</title>
+    <title>Off-cloud Webserver Part 2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -72,7 +72,7 @@
 </style>
 </head>
 
-<body style="background-color:#f2fdfa" onload="fetchSourhallData()">
+<body onload="fetchSourhallData()">
 <header>
     <svg height="126.462" width="150" style="stroke-width:0.3">
         <path d="M1.01 82.552l25.129 12.602v27.65h-8.59a1.83 1.83 0 1 0 0 3.658h21.027a1.83 1.83 0 1 0 0-3.658h-8.779V96.988l24.069 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456L6.957 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456zm5.943-7.771l49.586 24.865-2.667 5.32L4.284 80.103z"/>
@@ -90,8 +90,7 @@
     </svg>
 </header>
 <div class="content">
-    <!--- -algorithm 8by8bayer -threshold 245 -foreground #cc0000 -background #f2fdfa -->
-<h1>Fisk Solar</h1><p><img src="example_processed.png" alt="GaddingsDamn" /></p><p><a href="./2019/08/03/index.html">03/08/2019 Off-cloud Webserver Part 2</a><br><a href="./2019/08/02/index.html">02/08/2019 Off-cloud Webserver Part 1</a><br><a href="./2019/07/03/index.html">03/07/2019 Sleeping babies</a><br><a href="./2019/06/27/index.html">27/06/2019 Meallach's Grave, Arran</a><br><a href="./2019/06/26/index.html">26/06/2019 Druid Auchencar, Arran</a><br><a href="./2019/06/25/index.html">25/06/2019 Machrie Moor Standing Stones, Arran</a><br><a href="./2019/06/24/index.html">24/06/2019 Brodick 'Deer Park' Standing Stones, Cladach, Arran</a><br><a href="./2019/05/29/index.html">29/05/2019 Hexagrams</a><br><a href="./2019/05/26/index.html">26/05/2019 'Cairn Circle'</a><br><a href="./2019/05/05/index.html">05/05/2019 Summit Tunnel Fire. December 20th 1984</a><br><a href="./2019/04/28/index.html">28/04/2019 Gaddings Dam, Todmorden. First Swim 1987</a><br><a href="./2019/04/27/index.html">27/04/2019 Walsden TV Relay Tower, Stones Lane/Watty Lane, Todmorden</a><br><a href="./2019/04/20/index.html">20/04/2019 Cop Stone, Askham Fell, Cumbria</a><br><a href="./2019/04/18/index.html">18/04/2019 Helton, Cumbria</a><br><a href="./2019/04/14/index.html">14/04/2019 Stones Lane, Stones, Todmorden</a><br><a href="./2019/04/03/index.html">03/04/2019 Series Three</a><br><a href="./2019/03/05/index.html">05/03/2019 Series Two</a><br><a href="./2019/01/15/index.html">15/01/2019 Series One</a><br></p>
+    <h1>Off-cloud Webserver Part 2</h1><h4>03rd July 2019</h4><p>**The previous post covered relatively simple port-forwarding steps on a router to self-host a website. I've now escaped Sky Broadband and switched to 4GEE cellular broadband which offers higher bandwidth in our rural location. Unfortunately EE 4G broadband operates <a href="https://en.wikipedia.org/wiki/Carrier-grade_NAT">Carrier Grade NAT</a> which means a simple port forward from the router won't work. Here I'm detailing how I kept <a href="http://fisksolar.ddns.net/">Fisk Solar</a> online. **</p><ul><li>Unfortunately I can't think of any easy way of hosting a website on this 4G connection without having to rely on some kind of tunnel to a hosted service. A VPN service that supports a static Ip address and port forwarding should be fine, but they're also quite expensive. Instead I've got a Virtual Private Server from <a href="https://www.fasthosts.co.uk/virtual-private-servers">Fast Hosts</a> which is currently £2.49 a month.</li><li>From the VPS web-based control panel I setup a firewall rule to allow web traffic on port 80, and ssh access on the standard 443.</li><li>From a terminal I then ssh to the VPS and configure the ssh server config to allow reverse ssh tunneling: <code>nano /etc/ssh/sshd_config</code> the main setting being: <code>GatewayPorts yes</code></li><li>Once this config file has been saved restart the VPS to load the rule changes: <code>service sshd restart</code></li><li>I then exited the VPS ssh session and ssh to my Pi Zero, from there create a reverse ssh tunnel from the vps, any traffic hitting port 80 of the remote vps will be forwarded to port 80 of my local Pi Zero: <code>ssh -R 80:localhost:80 root@77.68.25.88</code> and the website is now up and running again.</li></ul><h2>To do</h2><p>I Need to create a cron job on the Pi Zero to check this tunnel is still active and set it up again if not.</p>
 </div>
 
 <footer>
@@ -100,7 +99,7 @@
 <!-- start_sourhall_data -->
 <!-- end_sourhall_data -->
 </div>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 36.4kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 7.7kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 <script>
 function fetchAwairData(callback) {
