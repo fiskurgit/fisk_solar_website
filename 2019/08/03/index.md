@@ -7,7 +7,11 @@
 * From the VPS web-based control panel I setup a firewall rule to allow web traffic on port 80, and ssh access on the standard 443.
 * From a terminal I then ssh to the VPS and configure the ssh server config to allow reverse ssh tunneling: `nano /etc/ssh/sshd_config` the main setting being: `GatewayPorts yes`
 * Once this config file has been saved restart the VPS to load the rule changes: `service sshd restart`
-* I then exited the VPS ssh session and ssh to my Pi Zero, from there create a reverse ssh tunnel from the vps, any traffic hitting port 80 of the remote vps will be forwarded to port 80 of my local Pi Zero: `ssh -R 80:localhost:80 root@77.68.25.88` and the website is now up and running again.
+* I then exited the VPS ssh session and ssh to my Pi Zero, from there create a reverse ssh tunnel from the vps, any traffic hitting port 80 of the remote vps will be forwarded to port 80 of my local Pi Zero:
+```
+ssh -R 80:localhost:80 root@77.68.25.88
+```
+* The last step is to change the [No-ip](https://www.noip.com/) domain to reference the VPS Ip address: http://fisksolar.ddns.net is now up and running again.
 
 ## To do
 
