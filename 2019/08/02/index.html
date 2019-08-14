@@ -73,22 +73,7 @@
 </head>
 
 <body onload="fetchSourhallData()">
-<header>
-    <svg height="126.462" width="150" style="stroke-width:0.3">
-        <path d="M1.01 82.552l25.129 12.602v27.65h-8.59a1.83 1.83 0 1 0 0 3.658h21.027a1.83 1.83 0 1 0 0-3.658h-8.779V96.988l24.069 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456L6.957 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456zm5.943-7.771l49.586 24.865-2.667 5.32L4.284 80.103z"/>
-        <path d="M45.598 82.552l25.13 12.602v27.65h-8.59a1.83 1.83 0 0 0 0 3.658h21.027a1.83 1.83 0 0 0 0-3.658h-8.779V96.988l24.068 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456L51.546 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456zm5.943-7.771l49.587 24.865-2.668 5.32-49.588-24.864z"/>
-        <path d="M148.99 97.196L96.135 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456l25.13 12.602v27.65h-8.59a1.83 1.83 0 0 0 0 3.658h21.027a1.83 1.83 0 0 0 0-3.658h-8.779V96.988l24.069 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456zm-5.941 7.77L93.46 80.103l2.669-5.321 49.586 24.865z"/>
-        <path d="M119.534 40.245a14.021 14.021 0 1 0-12.652-7.935 13.94 13.94 0 0 0 12.652 7.935zm-4.52-23.357a10.363 10.363 0 1 1-4.838 13.834 10.305 10.305 0 0 1 4.838-13.835z"/>
-        <path d="M109.885 10.454a1.83 1.83 0 0 0 3.296-1.588l-2.025-4.202a1.83 1.83 0 1 0-3.296 1.587z"/>
-        <path d="M126.698 41.138a1.83 1.83 0 0 0-.854 2.442l2.025 4.202a1.83 1.83 0 1 0 3.296-1.588l-2.025-4.202a1.83 1.83 0 0 0-2.442-.854z"/>
-        <path d="M136.077 20.073a1.825 1.825 0 0 0 .792-.183l4.203-2.024a1.83 1.83 0 0 0-1.588-3.296l-4.203 2.024a1.83 1.83 0 0 0 .796 3.478z"/>
-        <path d="M102.156 32.554l-4.203 2.025a1.83 1.83 0 1 0 1.588 3.296l4.202-2.025a1.83 1.83 0 0 0-1.587-3.296z"/>
-        <path d="M124.97 10.623A1.827 1.827 0 0 0 127.3 9.5l2.47-7.063a1.83 1.83 0 1 0-3.454-1.208l-2.47 7.063a1.83 1.83 0 0 0 1.124 2.33z"/>
-        <path d="M111.726 42.946l-2.47 7.063a1.83 1.83 0 1 0 3.454 1.208l2.47-7.063a1.83 1.83 0 0 0-3.454-1.208z"/>
-        <path d="M135.113 31.678a1.83 1.83 0 0 0 1.122 2.33l7.064 2.47a1.83 1.83 0 1 0 1.208-3.453l-7.064-2.47a1.83 1.83 0 0 0-2.33 1.123z"/>
-        <path d="M94.518 19.42l7.063 2.469a1.83 1.83 0 1 0 1.208-3.454l-7.063-2.47a1.83 1.83 0 1 0-1.208 3.454z"/>
-    </svg>
-</header>
+<header></header>
 <div class="content">
     <h1>Off-cloud Webserver Part 1</h1><h4>02nd July 2019</h4><p><strong>This website is running on a <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/">Raspberry Pi Zero W</a> in my garden shed, and is powered by a battery charged by two 100W solar panels on the shed roof.</strong></p><p>The content is created in simple <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> files which are turned into Html by a static site generator I made called <a href="https://github.com/fiskurgit/Statisk">Statisk</a>. New posts are written, Statisk does the conversion, then the local changes are pushed to a Git repo (<a href="https://github.com/fiskurgit/fisk_solar_website">a public repo on Github</a>). The Pi Zero has a regular <a href="https://en.wikipedia.org/wiki/Cron">Cron job</a> checking for any changes to download and update the site and also grabs local environment data from an <a href="https://getawair.com/">Awair air monitor</a>.</p><h2>Raspberry Pi Server Setup Notes</h2><p>I made some notes on setting up the web server so it'd be easier to do next time.</p><ul><li><p>Downloaded <a href="https://www.balena.io/etcher/">Balena Etcher</a> and <a href="https://www.raspberrypi.org/downloads/raspbian/">Rasbian Buster Lite</a>, a lightweight version of Raspbian with no desktop gui. Flashed onto a 32gb micro SD.</p></li><li><p>Connected a keyboard and hdmi cable, added user using the general RaspberryPi <a href="https://www.raspberrypi.org/documentation/linux/usage/users.md">Linux notes</a> through my TV.</p></li><li><p>Setup wifi, as we're using Lite there's no gui, needs to be done via terminal (<a href="https://www.argon40.com/resources/how-to-enable-your-raspberry-pi-3-wifi-via-terminal/">guide here</a>) then <code>sudo reboot</code></p></li><li><p><a href="https://www.raspberrypi.org/documentation/remote-access/ssh/">Enable ssh from terminal</a> - turns out <code>raspi-config</code> would have sorted the wifi more easily too. Reboot for good measure: <code>sudo reboot</code></p></li><li><p>Get the ip address on the Pi Zero: <code>hostname -I</code> then disconnect the keyboard and hdmi - from this point on everything is done over SSH from a laptop: <code>ssh username@192.168.111.222</code></p></li><li><p><a href="https://www.raspberrypi.org/documentation/remote-access/web-server/nginx.md">Install Nginx web server and start it</a>.</p></li><li><p>Setup Pi Zero to run <code>sudo /etc/init.d/nginx start</code> <a href="https://www.raspberrypi.org/documentation/linux/usage/rc-local.md">on startup</a></p></li><li><p>Install git: <code>sudo apt-get install git</code> and move to Nginx web server directory: <code>cd /var/www/html</code></p></li><li><p>Add 'hello world' index.html</p></li><li><p>Configure router. I have Sky Broadband (for the moment, I'm in the process of switching away from Murdoch) with Google WiFi attached via Ethernet. Create Firewall rule on the Broadband Router to allow incoming requests on Port 80 to be forwarded to Google WiFi. Google WiFi then has a port forwarding rule to pass incoming port 80 requests to the Pi Zero.</p></li><li><p>Setup No-IP. From the Pi Zero SSH session get the external IP: <code>curl icanhazip.com</code>. Add this address to a <a href="https://www.noip.com">No-IP</a> hostname: <a href="http://fisksolar.ddns.net">fisksolar.ddns.net</a>.</p></li><li><p>Add cron job to update website from git repo</p></li></ul>
 </div>
@@ -99,7 +84,7 @@
 <!-- start_sourhall_data -->
 <!-- end_sourhall_data -->
 </div>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 9.2kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 6.9kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 <script>
 function fetchAwairData(callback) {

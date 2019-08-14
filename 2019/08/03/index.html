@@ -73,22 +73,7 @@
 </head>
 
 <body onload="fetchSourhallData()">
-<header>
-    <svg height="126.462" width="150" style="stroke-width:0.3">
-        <path d="M1.01 82.552l25.129 12.602v27.65h-8.59a1.83 1.83 0 1 0 0 3.658h21.027a1.83 1.83 0 1 0 0-3.658h-8.779V96.988l24.069 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456L6.957 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456zm5.943-7.771l49.586 24.865-2.667 5.32L4.284 80.103z"/>
-        <path d="M45.598 82.552l25.13 12.602v27.65h-8.59a1.83 1.83 0 0 0 0 3.658h21.027a1.83 1.83 0 0 0 0-3.658h-8.779V96.988l24.068 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456L51.546 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456zm5.943-7.771l49.587 24.865-2.668 5.32-49.588-24.864z"/>
-        <path d="M148.99 97.196L96.135 70.69a1.83 1.83 0 0 0-2.455.816l-4.308 8.59a1.83 1.83 0 0 0 .815 2.456l25.13 12.602v27.65h-8.59a1.83 1.83 0 0 0 0 3.658h21.027a1.83 1.83 0 0 0 0-3.658h-8.779V96.988l24.069 12.068a1.828 1.828 0 0 0 2.455-.815l4.308-8.591a1.83 1.83 0 0 0-.815-2.456zm-5.941 7.77L93.46 80.103l2.669-5.321 49.586 24.865z"/>
-        <path d="M119.534 40.245a14.021 14.021 0 1 0-12.652-7.935 13.94 13.94 0 0 0 12.652 7.935zm-4.52-23.357a10.363 10.363 0 1 1-4.838 13.834 10.305 10.305 0 0 1 4.838-13.835z"/>
-        <path d="M109.885 10.454a1.83 1.83 0 0 0 3.296-1.588l-2.025-4.202a1.83 1.83 0 1 0-3.296 1.587z"/>
-        <path d="M126.698 41.138a1.83 1.83 0 0 0-.854 2.442l2.025 4.202a1.83 1.83 0 1 0 3.296-1.588l-2.025-4.202a1.83 1.83 0 0 0-2.442-.854z"/>
-        <path d="M136.077 20.073a1.825 1.825 0 0 0 .792-.183l4.203-2.024a1.83 1.83 0 0 0-1.588-3.296l-4.203 2.024a1.83 1.83 0 0 0 .796 3.478z"/>
-        <path d="M102.156 32.554l-4.203 2.025a1.83 1.83 0 1 0 1.588 3.296l4.202-2.025a1.83 1.83 0 0 0-1.587-3.296z"/>
-        <path d="M124.97 10.623A1.827 1.827 0 0 0 127.3 9.5l2.47-7.063a1.83 1.83 0 1 0-3.454-1.208l-2.47 7.063a1.83 1.83 0 0 0 1.124 2.33z"/>
-        <path d="M111.726 42.946l-2.47 7.063a1.83 1.83 0 1 0 3.454 1.208l2.47-7.063a1.83 1.83 0 0 0-3.454-1.208z"/>
-        <path d="M135.113 31.678a1.83 1.83 0 0 0 1.122 2.33l7.064 2.47a1.83 1.83 0 1 0 1.208-3.453l-7.064-2.47a1.83 1.83 0 0 0-2.33 1.123z"/>
-        <path d="M94.518 19.42l7.063 2.469a1.83 1.83 0 1 0 1.208-3.454l-7.063-2.47a1.83 1.83 0 1 0-1.208 3.454z"/>
-    </svg>
-</header>
+<header></header>
 <div class="content">
     <h1>Off-cloud Webserver Part 2</h1><h4>03rd July 2019</h4><p><strong>The previous post covered relatively simple port-forwarding steps on a router to self-host a website. I've now escaped Sky Broadband and switched to 4GEE cellular broadband which offers higher bandwidth in our rural location. EE 4G broadband operates <a href="https://en.wikipedia.org/wiki/Carrier-grade_NAT">Carrier Grade NAT</a> which means a simple port forward from the router won't work. Here I'm detailing how I kept <a href="http://fisksolar.ddns.net/">Fisk Solar</a> online.</strong></p><ul><li>Unfortunately I can't think of any easy way of hosting a website on this 4G connection without having to rely on some kind of tunnel to a hosted service. A VPN service that supports a static Ip address and port forwarding should be fine, but they're also quite expensive. Instead I've got a <a href="https://en.wikipedia.org/wiki/Virtual_private_server">Virtual Private Server</a> from <a href="https://www.fasthosts.co.uk/virtual-private-servers">Fast Hosts</a> which is currently £2.49 a month. <em>This solution does mean my off-cloud website is now not fully off-cloud.</em></li><li>From the VPS web-based control panel I setup a firewall rule to allow web traffic on port 80, and ssh access on the standard 443.</li><li>From a terminal I then ssh to the VPS and configure the ssh server config to allow reverse ssh tunneling: <code>nano /etc/ssh/sshd_config</code> the main setting being: <code>GatewayPorts yes</code></li><li>Once this config file has been saved restart ssh to load the rule changes:<pre><code>service sshd restart
 </code></pre></li><li>I then exited the VPS ssh session and ssh to my Pi Zero, from there create a reverse ssh tunnel from the VPS, any traffic hitting port 80 of the remote VPS will be forwarded to port 80 of my local Pi Zero (see Addendum below for update on this):<pre><code>ssh -R 80:localhost:80 root@77.68.25.88
@@ -102,7 +87,7 @@
 <!-- start_sourhall_data -->
 <!-- end_sourhall_data -->
 </div>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 8.5kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Icon by <a href="https://thenounproject.com/term/panels/2696981/">Icongeek26</a> | Page size including images: 6.3kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 <script>
 function fetchAwairData(callback) {
