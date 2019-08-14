@@ -20,7 +20,7 @@
 
 If one side of the ssh connection fails things get into a hung state where simply setting up the tunnel again will fail which was only solved by restarting the VPS. After some research I found the following arguments which hopefully will stay alive more reliably and also safely close the session and allow a cron job on the Pi Zero to get it up and running again:
 ```
-ssh -f -N -R 80:192.168.86.28:80 root@77.68.25.88 -o ExitOnForwardFailure=yes  -o ServerAliveInterval=60 ServerAliveCountMax=10
+ssh -f -N -R 80:192.168.86.28:80 root@77.68.25.88 -o ExitOnForwardFailure=yes  -o ServerAliveInterval=60 -o ServerAliveCountMax=10
 ```
 
 ### Todo
