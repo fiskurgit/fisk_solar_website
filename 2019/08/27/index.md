@@ -1,6 +1,6 @@
+<!--- -convert_greyscale -->
 ![An old photo of Flower Scar stone crusher from the Roger Birch collection](flower_scar_sign_close_up.jpg)
 
-<!--- -convert_greyscale -->
 # Flower Scar Stone Crusher
 #### 27th August 2019
 OS Grid Ref: [SD 91130 25068](https://osmaps.ordnancesurvey.co.uk/53.72195,-2.13588,16/pin)  
