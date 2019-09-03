@@ -1,4 +1,4 @@
-<!--- -convert_greyscale -if jpeg_high -->
+<!--- -convert_greyscale -if jpeg_high -bg #f3ecde -->
 ![An old photo of Flower Scar stone crusher from the Roger Birch collection](flower_scar_sign_close_up.jpg)
 
 # Flower Scar Stone Crusher

@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -convert_greyscale -->
+<!--- -image_format jpeg_high -convert_greyscale -bg #e8dbdb -->
 # Sleeping babies
 
 [View animated version (requires Javascript)](./js/)

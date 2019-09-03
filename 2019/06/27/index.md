@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -->
+<!--- -image_format jpeg_high -bg #ecffee -->
 # Meallach's Grave, Arran  
 #### 26th June 2019  
 OS Grid Ref: [NS 01742 28889](https://osmaps.ordnancesurvey.co.uk/55.51340,-5.14155,16/pin)  

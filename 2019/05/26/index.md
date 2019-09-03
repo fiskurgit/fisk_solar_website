@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -->
+<!--- -image_format jpeg_high -bg #e8dbdb -->
 # 'Cairn Circle'
 #### 26th May 2019  
 OS Grid Ref: [SD 94827 22566](https://osmaps.ordnancesurvey.co.uk/54.59103,-2.78437,18/pin)  

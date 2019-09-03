@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -->
+<!--- -image_format jpeg_high -bg #ecffee -->
 # Machrie Moor Standing Stones, Arran  
 #### 25th June 2019  
 OS Grid Ref: [NR 91123 32414](https://osmaps.ordnancesurvey.co.uk/55.5406,-5.31207,16.514429092407227/pin/)  

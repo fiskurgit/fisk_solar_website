@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -->
+<!--- -image_format jpeg_high -bg #f3ddd0 -->
 ![Radio mast at Stones](stones_radio2.jpg)  
 # Walsden TV Relay Tower, Stones Lane/Watty Lane, Todmorden
 #### 14th April 2019  

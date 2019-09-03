@@ -1,3 +1,4 @@
+<!--- -bg #e0d0b8 -->
 # Hexagrams
 
 ![Hexagrams Image](screenshot2.png)

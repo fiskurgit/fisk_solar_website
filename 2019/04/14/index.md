@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -->
+<!--- -image_format jpeg_high -bg #ecffee -->
 ![Standing stone](stones_lane_stone.jpg)
 # Stones Lane, Stones, Todmorden
 #### 14th April 2019  

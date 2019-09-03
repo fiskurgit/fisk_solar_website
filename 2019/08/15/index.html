@@ -72,10 +72,11 @@
 </style>
 </head>
 
-<body onload="fetchSourhallData()">
+<body style="background-color:#e9f1e8" onload="fetchSourhallData()">
 <header></header>
 <div class="content">
-    <h1>Off-cloud Webserver Part 3</h1><h4>15th August 2019</h4><p>Last step for keeping this site online is to periodically try and start the SSH tunnel, if it's still up the command just gets ignored.</p><ul><li>SSH to Pi Zero on local network, login as <code>su</code>, generate ssh key: <code>ssh-keygen -t rsa</code></li><li>SSH to remote VPS (from local Pi Zero) and create <code>.ssh</code> directory, then exit back to Pi Zero</li><li>Upload Pi Zero SSH key to VPS: <code>cat .ssh/id_rsa.pub | ssh user@77.68.25.88 'cat &gt;&gt; .ssh/authorized_keys'</code></li><li>SSH to VPS and set permissions: <code>chmod 700 .ssh; chmod 640 .ssh/authorized_keys</code></li><li>Now there's passwordless SSH between the local Pi Zero and remote VPS schedule a new cron task every 10 minutes on the Pi Zero to try the reverse SSH tunnel command <code>crontab -e</code> then add a new line:<pre><code>*/10 * * * * (bash -c 'ssh -f -N -R 80:192.168.86.28:80 user@77.68.25.88 -o ExitOnForwardFailure=yes  -o ServerAliveInterval=60 -o ServerAliveCountMax=10')
+    <!--- -bg #e9f1e8 -->
+<h1>Off-cloud Webserver Part 3</h1><h4>15th August 2019</h4><p>Last step for keeping this site online is to periodically try and start the SSH tunnel, if it's still up the command just gets ignored.</p><ul><li>SSH to Pi Zero on local network, login as <code>su</code>, generate ssh key: <code>ssh-keygen -t rsa</code></li><li>SSH to remote VPS (from local Pi Zero) and create <code>.ssh</code> directory, then exit back to Pi Zero</li><li>Upload Pi Zero SSH key to VPS: <code>cat .ssh/id_rsa.pub | ssh user@77.68.25.88 'cat &gt;&gt; .ssh/authorized_keys'</code></li><li>SSH to VPS and set permissions: <code>chmod 700 .ssh; chmod 640 .ssh/authorized_keys</code></li><li>Now there's passwordless SSH between the local Pi Zero and remote VPS schedule a new cron task every 10 minutes on the Pi Zero to try the reverse SSH tunnel command <code>crontab -e</code> then add a new line:<pre><code>*/10 * * * * (bash -c 'ssh -f -N -R 80:192.168.86.28:80 user@77.68.25.88 -o ExitOnForwardFailure=yes  -o ServerAliveInterval=60 -o ServerAliveCountMax=10')
 
 </code></pre></li></ul>
 </div>

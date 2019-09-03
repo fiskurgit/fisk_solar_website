@@ -1,4 +1,4 @@
-<!--- -image_format jpeg_high -->
+<!--- -image_format jpeg_high -bg #ecffee -->
 # Druid Auchencar, Arran  
 #### 26th June 2019  
 OS Grid Ref: [NR 89119 36290](https://osmaps.ordnancesurvey.co.uk/55.57450,-5.34674,16/pin)  
