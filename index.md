@@ -3,4 +3,9 @@
 
 ![GaddingsDamn](example.jpeg)
 
+## About
+
+A solar powered website in [Sourhall](sourhall.html), Todmorden, Yorkshire, UK.
+
+## Posts
 {{ posts }}
