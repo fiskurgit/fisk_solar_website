@@ -1,0 +1,196 @@
+<!--- dither=atkinson,maxwidth=500 -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EPEver eBox WiFi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+    body{
+        background: #fff;
+        max-width: 960px;
+        color: black;
+        padding: 12px;
+        line-height: 1.8;
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        font-size: 12pt;
+        font-weight: 400;
+        display: block;
+    }
+    code{
+      background: #f8f8f8;
+    }
+    pre{
+      background: #f8f8f8;
+      line-height: 1.5;
+      font-size: 16px;
+      font-family: monospace;
+      max-width: none;
+      width: fit-content;
+    }
+    p.poster{
+      max-width: 100%;
+    }
+    hr{
+        border: 1px solid black;
+    }
+    img{
+        max-width: 100%;
+        min-width: 100%;
+    }
+    footer{
+        font-size: 0.95rem;
+        text-align: left;
+    }
+    a{
+        color: black;
+        text-decoration: underline;
+    }
+    a:hover{
+        color: rgb(80, 56, 0);
+        text-decoration: underline;
+    }
+    h1{
+        font-size: 2.0rem;
+        text-transform: uppercase;
+        padding-bottom: 30px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        padding: 10px;
+    }
+    .grid-item {
+        padding: 20px;
+        font-size: 30px;
+        text-align: justify;
+    }
+</style>
+</head>
+
+<body style="background-color:#f3ecde" onload="fetchSourhallData()">
+<header></header>
+<div class="content">
+    <!--- -convert_greyscale -if jpeg_high -bg #f3ecde -->
+<h1>EPEver eBox WiFi</h1><p><img src="solar_controller_processed.jpeg" alt="EPEver charge controller and eBox WiFi dongle" /></p><p>EPEver have a RS485 to WiFi (RJ45 serial interface) dongle for use with their solar charge controllers. Unfortunately the WiFi operates in Access Point mode which means in order to use it you need to disconnect from your own network and directly connect to the dongle's SSD, it's only designed to be used with their Android or iOS apps, or their Windows-only desktop software.</p><h2>Fixing eBox WiFi</h2><p>The eBox does have port 80 open and includes an undocumented web dashboard. Browse to http://11.11.11.254/ and enter username: <code>admin</code> and password: <code>admin</code>. Older versions of this web dashboard are in Chinese (<a href="https://www.youtube.com/watch?v=uFURiLmQds0">see Adam Welch's YouTube video</a>) but my newer version is mostly in English. The eBox did at some point support station mode but it's been hobbled by EPEver for some reason, it's only hidden in the web interface though, the functionality remains, so if you <a href="select_cn.shtml">download this html page</a> and open it you should be able to set station mode (be sure to scan for and enter the credentials of your home WiFi elsewhere in the dashboard before doing this).</p><p>Following successfully setting up station mode and restarting the dongle I checked for new connections on my home WiFi and found a new device with SSID of <em>lierda_liLink_e86164</em> and ip address http://192.168.86.24/ (yours will be different, this is assigned via <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">DHCP</a>). Using the same credentials as before you can now use the dashboard and access any services from your regular network. This will break the iOS/Android apps which have a hard-coded IP address for the box (if you really wanted to you could configure your network to redirect to the correct ip address, or even decompile the app, change the ip, rebuild and self-sign). Since we want to log data using a Raspberry Pi losing the (pretty mediocre) apps is fine.</p><h2>Retrieve Data</h2><p>If you run a port scan on the eBox IP address you should see two ports open: 80 for the web dashboard and 8088 for the <a href="https://en.wikipedia.org/wiki/Modbus">modbus</a> interface.</p><p>First step is to set up a serial relay using <a href="https://medium.com/@copyconstruct/socat-29453e9fc8a6">socat</a> so a local Python script can communicate with the solar controller, there was a lot of trial and error here, so I'm not 100% on the correctness of what I came up with however this worked:</p><pre><code>sudo socat -d -d pty,raw,echo=0,waitslave tcp:192.168.86.24:8088
+sudo chmod 777 /dev/ttys002
+</code></pre><p>The Python script was also cobbled together from various sources (by Googling 'modbus python epever'), then expanded by referring to the <a href="1733_modbus_protocol.pdf">EPEVER Modbus pdf</a>, it uses the open source <a href="https://github.com/riptideio/pymodbus">PyModBus</a> library. Other people have reported various issues with baudrate and timeout length but since this will only run once every five minutes via a cron task (as opposed to a realtime interface) none of these issues manifest.</p><pre><code>import logging
+import os
+from pymodbus.client.sync import ModbusSerialClient as ModbusClient
+
+# logging.basicConfig()
+# log = logging.getLogger()
+# log.setLevel(logging.DEBUG)
+
+# EPEver Realtime addresses
+addr_realtime_pv_array_voltage_v = 0x3100
+addr_realtime_pv_array_current_a = 0x3101
+addr_realtime_pv_array_power_low_w = 0x3102
+addr_realtime_pv_array_power_high_w = 0x3103
+addr_realtime_battery_voltage_v = 0x3104
+addr_realtime_battery_charging_current_a = 0x3105
+addr_realtime_battery_charging_power_low_w = 0x3106
+addr_realtime_battery_charging_power_high_w = 0x3107
+addr_realtime_load_voltage_v = 0x310C
+addr_realtime_load_current_a = 0x310D
+addr_realtime_load_power_w = 0x310E
+addr_realtime_battery_temp_c = 0x3110
+addr_realtime_charge_controller_temp_c = 0x3111
+addr_realtime_heat_sink_temp_c = 0x3112
+addr_realtime_battery_remaining_percentage = 0x311A
+addr_realtime_battery_sensor_temp_c = 0x311B
+addr_realtime_battery_status = 0x3200
+addr_realtime_charging_equipment_status = 0x3201
+
+
+def read_param(addr):
+    register = modbus_client.read_input_registers(addr, 1, unit=1)
+    if not register.isError():
+        value = float(register.registers[0] / 100.0)
+        return value
+    else:
+        return -1
+
+
+def read_percent_param(addr):
+    register = modbus_client.read_input_registers(addr, 1, unit=1)
+    if not register.isError():
+        return register.registers[0]
+    else:
+        return -1
+
+
+# I should be using Pythons excellent json methods but I'm not
+def add_json_value(file, param, value):
+    file.write(&quot;\t\t{\n\t\t\t\&quot;param\&quot;: \&quot;&quot; + param + &quot;\&quot;,\n&quot;)
+    file.write(&quot;\t\t\t\&quot;value\&quot;: \&quot;&quot; + value + &quot;\&quot;\n\t\t},\n&quot;)
+
+
+# There's no easy way in Python to remove the last char in a file, so just add this extra method with no trailing comma
+def add_last_json_value(file, param, value):
+    file.write(&quot;\t\t{\n\t\t\t\&quot;param\&quot;: \&quot;&quot; + param + &quot;\&quot;,\n&quot;)
+    file.write(&quot;\t\t\t\&quot;value\&quot;: \&quot;&quot; + value + &quot;\&quot;\n\t\t}\n&quot;)
+
+
+solar_params = open(&quot;solar_params.json&quot;, &quot;w+&quot;)
+solar_params.write(&quot;{\n\t\&quot;values\&quot;: [\n&quot;)
+
+modbus_client = ModbusClient(
+    method='rtu', port='/dev/ttys004',
+    stopbits=1, bytesize=8, parity='N',
+    baudrate=115200, timeout=5
+)
+
+if modbus_client.connect():
+    realtime_pv_array_voltage_v = read_param(addr_realtime_pv_array_voltage_v)
+    print(&quot;Solar Array Voltage: &quot; + str(realtime_pv_array_voltage_v))
+    add_json_value(solar_params, &quot;Solar Array Voltage&quot;, str(realtime_pv_array_voltage_v))
+
+    realtime_pv_array_current_a = read_param(addr_realtime_pv_array_current_a)
+    print(&quot;Solar Array Current (Amps): &quot; + str(realtime_pv_array_current_a))
+    add_json_value(solar_params, &quot;Solar Array Current (Amps)&quot;, str(realtime_pv_array_current_a))
+
+    realtime_pv_array_power_low_w = read_param(addr_realtime_pv_array_power_low_w)
+    print(&quot;Solar Array Power Watts (low): &quot; + str(realtime_pv_array_power_low_w))
+    add_json_value(solar_params, &quot;Solar Array Power Watts (low)&quot;, str(realtime_pv_array_power_low_w))
+
+    realtime_pv_array_power_high_w = read_param(addr_realtime_pv_array_power_high_w)
+    print(&quot;Solar Array Power Watts (high): &quot; + str(realtime_pv_array_power_high_w))
+    add_json_value(solar_params, &quot;Solar Array Power Watts (high)&quot;, str(realtime_pv_array_power_high_w))
+
+    realtime_battery_voltage_v = read_param(addr_realtime_battery_voltage_v)
+    print(&quot;Battery Voltage: &quot; + str(realtime_battery_voltage_v))
+    add_json_value(solar_params, &quot;Battery Voltage&quot;, str(realtime_battery_voltage_v))
+
+    realtime_battery_charging_current_a = read_param(addr_realtime_battery_charging_current_a)
+    print(&quot;Battery Charging Current (Amps): &quot; + str(realtime_battery_charging_current_a))
+    add_json_value(solar_params, &quot;Battery Charging Current (Amps)&quot;, str(realtime_battery_charging_current_a))
+
+    realtime_battery_remaining_percentage = read_percent_param(addr_realtime_battery_remaining_percentage)
+    print(&quot;Battery Remaining: &quot; + str(realtime_battery_remaining_percentage) + &quot;%&quot;)
+    add_last_json_value(solar_params, &quot;Remaining Battery&quot;, str(realtime_battery_remaining_percentage))
+
+    solar_params.write(&quot;\t]\n}&quot;)
+
+else:
+    print('Modbus connection error')
+
+solar_params.close()
+modbus_client.close()
+
+</code></pre><p>You can then run socat and the Python script together:</p><pre><code>socat -d -d pty,raw,waitslave,echo=0 2&gt;socat_log.txt tcp:192.168.86.24:8088&amp; python fisk_epever_modbus_b.py
+</code></pre><p>This will open a serial relay, try and fetch the modbus params, then close. If you put this command in a crontab job you'll get periodic reporting on the solar array and battery status.</p><h1>Notes</h1><p>If you somehow brick the eBox EPEver have <a href="WiFi-module-restore-method-Customer.pdf">supplied instructions</a> for a hard reset (requires disassembly and shorting a couple of connections)</p><h1>Links</h1><p>All the 3rd party files and various information above was pulled together by other people far more skilled than myself:</p><ul><li><a href="https://www.youtube.com/watch?v=uFURiLmQds0">Hacked EPEver Wifi to RS485 Adapter eBox-WIFI-01 - 12v Solar Shed</a> - Adam Welch</li><li><a href="http://adamwelch.co.uk/2017/12/build-your-own-rs485-to-wifi-adapter-for-epever-solar-charge-controllers/">Build Your Own RS485 to Wifi Adapter for EPEver Solar Charge Controllers</a></li><li><a href="https://www.youtube.com/watch?v=YWnzTsFeh3g">EPEver eBox WiFi 01 STA Mode and its own Power Supply</a> - Stuart Davies</li><li><a href="https://www.youtube.com/watch?v=AqZic-IzFIg&amp;t=337s">EPEver RS485 to WiFi updated board</a> - Colin Hickey</li><li><a href="https://www.tindie.com/products/plop211/epever-rs485-to-wifi-adaptor-new-revision/">Epever RS485 to wifi adaptor</a> - Colin's own adapter that doesn't require hacking EPEever's eBox.</li><li><a href="https://github.com/toggio/PhpEpsolarTracer">Php EpSolar Tracer Class</a></li><li><a href="https://github.com/kasbert/epsolar-tracer">epsolar-tracer</a></li><li><a href="https://github.com/alexnathanson/EPSolar_Tracer">EPSolar_Tracer</a></li><li><a href="http://blog.eplop.co.uk/2017/06/epeverepsolar-output-to-influxdbgrafana.html">Epever/Epsolar output to InfluxDB/Grafana</a></li><li><a href="https://community.blynk.cc/t/epsolar-tracer-2210a-charge-controller-blynk-epic-solar-monitor/10596">EPSolar Tracer 2210A Charge Controller + Blynk = Epic Solar Monitor</a></li></ul>
+</div>
+
+<footer>
+<hr>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Page size including images: 152.7kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+</footer>
+</body>
+</html>
