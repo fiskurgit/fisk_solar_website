@@ -54,6 +54,30 @@ addr_realtime_battery_status = 0x3200
 addr_realtime_charging_equipment_status = 0x3201
 
 
+# EPEver Statistical Parameter addresses
+addr_consumed_energy_today_low16bits_kwh = 0x3300
+addr_consumed_energy_today_high16bits_kwh = 0x3301
+addr_maximum_battery_voltage_today_v = 0x3302
+addr_minimum_battery_voltage_today_v = 0x3303
+addr_consumed_energy_today_low16bits_kwh = 0x3304
+addr_consumed_energy_today_high16bits_kwh = 0x3305
+addr_total_consumed_energy_low16bits_kwh = 0x330A
+addr_total_consumed_energy_high16bits_kwh = 0x330B
+addr_generated_energy_today_low16bits_kwh = 0x330C
+addr_generated_energy_today_high16bits_kwh = 0x330D
+addr_total_generated_energy_low16bits_kwh = 0x3312
+addr_total_generated_energy_high16bits_kwh = 0x3313
+
+
+def read_32bit_param(addr_low):
+    register = modbus_client.read_input_registers(addr_low, 2, unit=1)
+    if not register.isError():
+        value = ((register.registers[1] << 16) + register.registers[0]) / 100
+        return value
+    else:
+        return -1
+
+
 def read_param(addr):
     register = modbus_client.read_input_registers(addr, 1, unit=1)
     if not register.isError():
@@ -80,14 +104,14 @@ def add_json_value(file, param, value):
 # There's no easy way in Python to remove the last char in a file, so just add this extra method with no trailing comma
 def add_last_json_value(file, param, value):
     file.write("\t\t{\n\t\t\t\"param\": \"" + param + "\",\n")
-    file.write("\t\t\t\"value\": \"" + value + "\"\n\t\t}\n")
+    file.write("\t\t\t\"value\": \"" + value + "%\"\n\t\t}\n")
 
 
-solar_params = open("solar_params.json", "w+")
+solar_params = open("/var/www/html/solar_params.json", "w+")
 solar_params.write("{\n\t\"values\": [\n")
 
 modbus_client = ModbusClient(
-    method='rtu', port='/dev/ttys004',
+    method='rtu', port='/dev/pts/10',
     stopbits=1, bytesize=8, parity='N',
     baudrate=115200, timeout=5
 )
@@ -97,25 +121,17 @@ if modbus_client.connect():
     print("Solar Array Voltage: " + str(realtime_pv_array_voltage_v))
     add_json_value(solar_params, "Solar Array Voltage", str(realtime_pv_array_voltage_v))
 
-    realtime_pv_array_current_a = read_param(addr_realtime_pv_array_current_a)
-    print("Solar Array Current (Amps): " + str(realtime_pv_array_current_a))
-    add_json_value(solar_params, "Solar Array Current (Amps)", str(realtime_pv_array_current_a))
-
-    realtime_pv_array_power_low_w = read_param(addr_realtime_pv_array_power_low_w)
-    print("Solar Array Power Watts (low): " + str(realtime_pv_array_power_low_w))
-    add_json_value(solar_params, "Solar Array Power Watts (low)", str(realtime_pv_array_power_low_w))
-
-    realtime_pv_array_power_high_w = read_param(addr_realtime_pv_array_power_high_w)
-    print("Solar Array Power Watts (high): " + str(realtime_pv_array_power_high_w))
-    add_json_value(solar_params, "Solar Array Power Watts (high)", str(realtime_pv_array_power_high_w))
-
     realtime_battery_voltage_v = read_param(addr_realtime_battery_voltage_v)
     print("Battery Voltage: " + str(realtime_battery_voltage_v))
     add_json_value(solar_params, "Battery Voltage", str(realtime_battery_voltage_v))
 
-    realtime_battery_charging_current_a = read_param(addr_realtime_battery_charging_current_a)
-    print("Battery Charging Current (Amps): " + str(realtime_battery_charging_current_a))
-    add_json_value(solar_params, "Battery Charging Current (Amps)", str(realtime_battery_charging_current_a))
+    consumed_energy_today_kwh = read_32bit_param(addr_consumed_energy_today_low16bits_kwh)
+    print("Consumed energy today: " + str(consumed_energy_today_kwh))
+    add_json_value(solar_params, "Consumed Energy Today", str(consumed_energy_today_kwh) + "kwh")
+
+    total_generated_energy_kwh = read_32bit_param(addr_total_generated_energy_low16bits_kwh)
+    print("Total Generated Energy: " + str(total_generated_energy_kwh))
+    add_json_value(solar_params, "Total Generated Energy", str(total_generated_energy_kwh) + "kwh")
 
     realtime_battery_remaining_percentage = read_percent_param(addr_realtime_battery_remaining_percentage)
     print("Battery Remaining: " + str(realtime_battery_remaining_percentage) + "%")

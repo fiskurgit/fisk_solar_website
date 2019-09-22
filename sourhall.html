@@ -83,6 +83,11 @@
 
 <footer>
 
+<div id="solar_data">
+<!-- start_sourhall_data -->
+<!-- end_sourhall_data -->
+</div>
+
 <div id="sourhall_data">
 <!-- start_sourhall_data -->
 <!-- end_sourhall_data -->
@@ -98,7 +103,33 @@ function fetchAwairData(callback) {
        .catch(error => callback(error, null))
 }
 
+function fetchSolarData(callback){
+  fetch(`http://fisksolar.ddns.net/solar_params.json`)
+     .then(response => response.json())
+     .then(json => callback(null, json))
+     .catch(error => callback(error, null))
+}
+
 function fetchSourhallData(){
+  fetchSolarData((error, solarData) => {
+     if (error){
+         console.log(error)
+     }else{
+       let values = solarData.values
+
+       var solarHtml = ""
+       values.forEach(function(element) {
+         console.log(element);
+          solarHtml = solarHtml + element.param + ": " + element.value  + "<br>"
+        });
+
+        var solarDiv = document.getElementById("solar_data");
+        var solarElement = document.createElement('span');
+        solarElement.innerHTML = solarHtml;
+        solarDiv.appendChild(solarElement);
+
+     }
+ })
  fetchAwairData((error, awairSourhall) => {
     if (error){
         console.log(error)

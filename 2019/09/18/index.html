@@ -109,6 +109,30 @@ addr_realtime_battery_status = 0x3200
 addr_realtime_charging_equipment_status = 0x3201
 
 
+# EPEver Statistical Parameter addresses
+addr_consumed_energy_today_low16bits_kwh = 0x3300
+addr_consumed_energy_today_high16bits_kwh = 0x3301
+addr_maximum_battery_voltage_today_v = 0x3302
+addr_minimum_battery_voltage_today_v = 0x3303
+addr_consumed_energy_today_low16bits_kwh = 0x3304
+addr_consumed_energy_today_high16bits_kwh = 0x3305
+addr_total_consumed_energy_low16bits_kwh = 0x330A
+addr_total_consumed_energy_high16bits_kwh = 0x330B
+addr_generated_energy_today_low16bits_kwh = 0x330C
+addr_generated_energy_today_high16bits_kwh = 0x330D
+addr_total_generated_energy_low16bits_kwh = 0x3312
+addr_total_generated_energy_high16bits_kwh = 0x3313
+
+
+def read_32bit_param(addr_low):
+    register = modbus_client.read_input_registers(addr_low, 2, unit=1)
+    if not register.isError():
+        value = ((register.registers[1] &lt;&lt; 16) + register.registers[0]) / 100
+        return value
+    else:
+        return -1
+
+
 def read_param(addr):
     register = modbus_client.read_input_registers(addr, 1, unit=1)
     if not register.isError():
@@ -135,14 +159,14 @@ def add_json_value(file, param, value):
 # There's no easy way in Python to remove the last char in a file, so just add this extra method with no trailing comma
 def add_last_json_value(file, param, value):
     file.write(&quot;\t\t{\n\t\t\t\&quot;param\&quot;: \&quot;&quot; + param + &quot;\&quot;,\n&quot;)
-    file.write(&quot;\t\t\t\&quot;value\&quot;: \&quot;&quot; + value + &quot;\&quot;\n\t\t}\n&quot;)
+    file.write(&quot;\t\t\t\&quot;value\&quot;: \&quot;&quot; + value + &quot;%\&quot;\n\t\t}\n&quot;)
 
 
-solar_params = open(&quot;solar_params.json&quot;, &quot;w+&quot;)
+solar_params = open(&quot;/var/www/html/solar_params.json&quot;, &quot;w+&quot;)
 solar_params.write(&quot;{\n\t\&quot;values\&quot;: [\n&quot;)
 
 modbus_client = ModbusClient(
-    method='rtu', port='/dev/ttys004',
+    method='rtu', port='/dev/pts/10',
     stopbits=1, bytesize=8, parity='N',
     baudrate=115200, timeout=5
 )
@@ -152,25 +176,17 @@ if modbus_client.connect():
     print(&quot;Solar Array Voltage: &quot; + str(realtime_pv_array_voltage_v))
     add_json_value(solar_params, &quot;Solar Array Voltage&quot;, str(realtime_pv_array_voltage_v))
 
-    realtime_pv_array_current_a = read_param(addr_realtime_pv_array_current_a)
-    print(&quot;Solar Array Current (Amps): &quot; + str(realtime_pv_array_current_a))
-    add_json_value(solar_params, &quot;Solar Array Current (Amps)&quot;, str(realtime_pv_array_current_a))
-
-    realtime_pv_array_power_low_w = read_param(addr_realtime_pv_array_power_low_w)
-    print(&quot;Solar Array Power Watts (low): &quot; + str(realtime_pv_array_power_low_w))
-    add_json_value(solar_params, &quot;Solar Array Power Watts (low)&quot;, str(realtime_pv_array_power_low_w))
-
-    realtime_pv_array_power_high_w = read_param(addr_realtime_pv_array_power_high_w)
-    print(&quot;Solar Array Power Watts (high): &quot; + str(realtime_pv_array_power_high_w))
-    add_json_value(solar_params, &quot;Solar Array Power Watts (high)&quot;, str(realtime_pv_array_power_high_w))
-
     realtime_battery_voltage_v = read_param(addr_realtime_battery_voltage_v)
     print(&quot;Battery Voltage: &quot; + str(realtime_battery_voltage_v))
     add_json_value(solar_params, &quot;Battery Voltage&quot;, str(realtime_battery_voltage_v))
 
-    realtime_battery_charging_current_a = read_param(addr_realtime_battery_charging_current_a)
-    print(&quot;Battery Charging Current (Amps): &quot; + str(realtime_battery_charging_current_a))
-    add_json_value(solar_params, &quot;Battery Charging Current (Amps)&quot;, str(realtime_battery_charging_current_a))
+    consumed_energy_today_kwh = read_32bit_param(addr_consumed_energy_today_low16bits_kwh)
+    print(&quot;Consumed energy today: &quot; + str(consumed_energy_today_kwh))
+    add_json_value(solar_params, &quot;Consumed Energy Today&quot;, str(consumed_energy_today_kwh) + &quot;kwh&quot;)
+
+    total_generated_energy_kwh = read_32bit_param(addr_total_generated_energy_low16bits_kwh)
+    print(&quot;Total Generated Energy: &quot; + str(total_generated_energy_kwh))
+    add_json_value(solar_params, &quot;Total Generated Energy&quot;, str(total_generated_energy_kwh) + &quot;kwh&quot;)
 
     realtime_battery_remaining_percentage = read_percent_param(addr_realtime_battery_remaining_percentage)
     print(&quot;Battery Remaining: &quot; + str(realtime_battery_remaining_percentage) + &quot;%&quot;)
@@ -190,7 +206,7 @@ modbus_client.close()
 
 <footer>
 <hr>
-    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Page size including images: 152.7kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
+    Inspired by <a href="https://solar.lowtechmagazine.com">LOW←TECH MAGAZINE</a> | Page size including images: 153.1kb | <a href="https://github.com/fiskurgit/Statisk">Fisk Statisk</a><br>
 </footer>
 </body>
 </html>
