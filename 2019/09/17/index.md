@@ -12,7 +12,10 @@ The inscription reads IESU DEUS DOMINUS MONTIUM: Jesus, God, Lord of the Mountai
 
 ![Picture of the Catholes Stone](catholes_main.jpg)
 
-I approached from the west side of the clough, climbing down to the brook, jumped across then found my way up through the heather. To the south I spotted larger groups of rocks so headed that way to inspect, the Cathole Stone was amongst the first I came across (the coordinates above were taken on the spot and are precise, if you use them finding it should be relatively straightforward).
+I approached from the west side of the clough, climbing down to the brook, jumped across then found my way up through the heather. To the south I spotted larger groups of rocks so headed that way to inspect, the Catholes Stone was amongst the first I came across (the coordinates above were taken on the spot and are precise, if you use them finding it should be relatively straightforward).
 
-View from the west looking back to Clunters, with the Cathole Stone highlighted:
+View from the west looking back to Clunters, with the Catholes Stone highlighted:
 ![Annotated photo showing precise location of the Catholes Stone](catholes_stone_location.jpg)
+
+View from across the valley at Todmorden Moor:
+![Annotated photo showing coarse location of the Catholes Stone](catholes_stone_location_far.png)
