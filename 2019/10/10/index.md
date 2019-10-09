@@ -1,4 +1,4 @@
-<!--- -convert_greyscale -image_format jpeg_high -maxwidth 1500 -background #d7d7d7 -->
+<!--- -convert_greyscale -image_format jpeg_high -maxwidth 1500 -background #d2b884 -->
 # Series Six
 
 ![Sample1](001.png)
