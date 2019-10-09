@@ -1,5 +1,5 @@
 <!--- -bg #e0d0b8 -->
-# Hexagrams
+# Series Four: Hexagrams
 
 ![Hexagrams Image](screenshot2.png)
 
