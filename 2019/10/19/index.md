@@ -7,5 +7,3 @@ Latitude: 52° 51' 50" N
 Longitude: 4° 37' 19" W
 
 ![Picture of the Standing Stone](sarn_standing_stone.jpg)
-
-![Picture of the Standing Stone](sarn_standing_stone2.jpg)
