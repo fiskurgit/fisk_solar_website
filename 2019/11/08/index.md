@@ -1,4 +1,4 @@
-<!--- -convert_none -background #666666 -->
+<!--- -convert_none -background #dedfdf -->
 # A galaxy in 36 lines of code
 
 ![Stars orbiting a black hole](screenshot.png)
