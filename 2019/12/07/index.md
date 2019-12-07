@@ -29,6 +29,6 @@ done
 
 # U2F Key on Linux
 
-* The last issue was logging into my Google account which has [Advanced Protection](https://landing.google.com/advancedprotection/) enabled. My [Feitian USB key](https://www.ftsafe.com/products/fido/multi) didn't work. [Google's instructions for fixing this](https://support.google.com/titansecuritykey/answer/9148044?hl=en) only work with their vendor and product ID - but I carried out the steps.
+* The last issue was logging into my Google account which has [Advanced Protection](https://landing.google.com/advancedprotection/) enabled. My [Feitian USB key](https://www.ftsafe.com/products/fido/multi) didn't work. [Google's instructions for fixing this](https://support.google.com/titansecuritykey/answer/9148044?hl=en) only work with their vendor and product ID.
 
-* With the Feitian key plugged in I then ran `dmesg` to find the Feitian vendor and product ID, updated the rules file above, then rebooted and logged in to my Google account.
+* With the Feitian key plugged in running `dmesg` outputs the Feitian vendor and product ID, then the rules file step above can be completed. After a reboot I could log in to my Google account.
