@@ -1,6 +1,6 @@
 ## About
 
-A solar powered website in [Sourhall](sourhall.html), Todmorden, Yorkshire, UK.
+A solar powered website in Sourhall, Todmorden, Yorkshire, UK.
 
 ## Posts
 [27/11/2019 Ray Casting](2019/11/27/index.md)  
