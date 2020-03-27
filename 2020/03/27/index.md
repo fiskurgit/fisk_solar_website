@@ -31,6 +31,6 @@ app.get('*', function (req, res) {
 app.listen(80)
 ```
 
-Exposing my local RaspberryPi Zero to the internet is still done with a reverse ssh tunnel with a cron job periodically checking things are still running:
+Exposing my local RaspberryPi Zero to the internet from 4GEE's double-natted cellular broadband is still done with a reverse ssh tunnel to a [FastHosts VPS](https://www.fasthosts.co.uk/virtual-private-servers) with a cron job periodically checking things are still running:
 
 ```ssh -f -N -R 80:192.168.86.28:80 root@77.68.25.88 -o ExitOnForwardFailure=yes -o ServerAliveInterval=60 -o ServerAliveCountMax=10```
