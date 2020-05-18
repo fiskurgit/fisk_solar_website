@@ -31,6 +31,8 @@ app.get('*', function (req, res) {
 app.listen(80)
 ```
 
+Keeping the node/express process running is done using [pm2](https://pm2.keymetrics.io/), the process is called `server`, so after any edits as restart is required: `pm2 restart server`.
+  
 Exposing my local RaspberryPi Zero to the internet from 4GEE's double-natted cellular broadband is still done with a reverse ssh tunnel to a [FastHosts VPS](https://www.fasthosts.co.uk/virtual-private-servers) with a cron job periodically checking things are still running:
 
 ```ssh -f -N -R 80:192.168.86.28:80 root@77.68.25.88 -o ExitOnForwardFailure=yes -o ServerAliveInterval=60 -o ServerAliveCountMax=10```
