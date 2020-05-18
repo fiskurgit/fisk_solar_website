@@ -1,6 +1,6 @@
 ## About
 
-- A solar powered website in Sourhall, Todmorden, Yorkshire, UK.
+A solar powered website in Sourhall, Todmorden, Yorkshire, UK.
 
 ## Posts
 * [05/04/2020 Mayburgh Henge, Yanwath, Penrith](2020/04/05/index.md)  
